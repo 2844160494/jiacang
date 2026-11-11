@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">全局剪贴板</string>
+    <string name="cut_service_label">剪藏 · 剪切识别</string>
+    <string name="cut_service_desc">用于识别“剪切”操作：只观察编辑框的选中和删除，把被剪掉的内容和随后出现的剪贴板对上号；观察到的文本只在内存里留 9 秒，不联网。剪贴板历史由剪藏自己保存在本机。</string>
+</resources>
