@@ -6,7 +6,7 @@
 
 要发给别人，需要把 APK 放到一个**公网可访问**的地方。最推荐 **GitHub Releases**，其次是 Gitee Releases 或网盘。**不要**把 `127.0.0.1` 链接发出去。
 
-另外：**先确认 2.1 诊断版不再闪退，再发布**。2.0 在你的 ColorOS 17 上会秒退，不要把它发给别人。
+另外：**先确认 2.2不再闪退，再发布**。2.0 在你的 ColorOS 17 上会秒退，不要把它发给别人。
 
 ---
 
@@ -14,12 +14,12 @@
 
 1. 在 GitHub 新建一个仓库（例如 `jiacang`），**Public**（私有仓库的 Release 附件别人也下不到）。
 2. 进入仓库的 **Releases → Draft a new release**。
-3. Tag 填 `v2.1`，标题填「剪藏 2.1」。
-4. 把 `dist/jiacang-2.1.apk` 拖进附件区域；如果手机 GitHub App 不支持传附件，就用手机浏览器打开 GitHub 网页上传。
+3. Tag 填 `v2.2`，标题填「剪藏 2.2」。
+4. 把 `dist/jiacang-2.2.apk` 拖进附件区域；如果手机 GitHub App 不支持传附件，就用手机浏览器打开 GitHub 网页上传。
 5. Publish release。得到的公网直链形如：
 
    ```text
-   https://github.com/<你的用户名>/jiacang/releases/download/v2.1/jiacang-2.1.apk
+   https://github.com/<你的用户名>/jiacang/releases/download/v2.2/jiacang-2.2.apk
    ```
 
 6. 把这个链接发给别人即可。
@@ -41,7 +41,7 @@ Release 附件是永久地址（只要不删 release/仓库），比网盘链接
 cd global-clip
 git init
 git add .
-git commit -m "feat: 剪藏 2.1"
+git commit -m "feat: 剪藏 2.2"
 git branch -M main
 git remote add origin https://github.com/<你的用户名>/jiacang.git
 git push -u origin main
@@ -115,7 +115,7 @@ keytool -genkeypair -keystore release.keystore -alias jiacang \
 ## 公开发布前的检查清单
 
 - [ ] 在 ColorOS 17 上实际安装、打开、复制、分类、重启后恢复都正常；
-- [ ] 2.1 诊断版的临时改动已恢复：自动启动服务、主题、图标、崩溃兜底（兜底可保留，崩溃写文件建议只在调试版）；
+- [ ] 2.2的临时改动已恢复：自动启动服务、主题、图标、崩溃兜底（兜底可保留，崩溃写文件建议只在调试版）；
 - [ ] 给普通用户把 **DSH 同步默认关掉**，或至少把设置里的 DSH 文案写清楚（没有 DSH 的用户不需要它）；
 - [ ] README 里去掉只有你这台设备才有的 `/tmp/abuild` 路径说明，保留 Gradle / GitHub Actions 构建；
 - [ ] Release notes 说明悬浮窗、通知、电池、可选无障碍权限的用途；
@@ -129,4 +129,4 @@ keytool -genkeypair -keystore release.keystore -alias jiacang \
 
 **只分享安装包**：GitHub Releases 上传 APK 最快，不需要动代码。  
 **想长期维护/开源**：源码推 GitHub，APK 放 Releases，固定签名 key 放本地/Secrets，CI 发版再加 release workflow。  
-**现在先做的事**：装 2.1 诊断版确认不闪退；能用后我帮你把发布流程和 CI 配置整理好。
+**现在先做的事**：装 2.2确认不闪退；能用后我帮你把发布流程和 CI 配置整理好。

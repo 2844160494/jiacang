@@ -2,7 +2,8 @@
 
 一个只在本机工作的 Android 剪贴板整理器：**不打开 DSH，也能在后台收下你在任何应用里复制 / 剪切的内容**，自动识别分类、抽出最值得一键复制的那个值，再用一个更安静的界面把它们排好。
 
-- 安装包：`dist/jiacang-2.2.apk`（固定签名，Android 10+，可直接覆盖安装 2.0/2.1）
+- 安装包：[GitHub Releases](https://github.com/2844160494/jiacang/releases/latest)（固定签名，Android 10+，可直接覆盖安装 2.0/2.1）
+- 源码：[GitHub 仓库](https://github.com/2844160494/jiacang)
 - 应用名仍是「全局剪贴板」，界面品牌叫「剪藏」；包名保持 `dev.local.globalclip`，旧历史会在首次启动时自动迁进新数据库。
 - 2.2 针对 Android 17 / ColorOS 17 修了启动闪退：换回系统主题、纯 PNG 图标，并停止在打开 App 时自动拉起捕获服务；第一次打开先手动点「已暂停」开启记录。
 
