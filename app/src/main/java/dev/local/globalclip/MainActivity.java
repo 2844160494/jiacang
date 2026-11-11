@@ -118,10 +118,6 @@ public class MainActivity extends Activity {
         Ui.setBar(this);
         store = ClipStore.get(this);
         prefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-        // 诊断版第一次启动不复用旧版的“捕获已开启”，避免进程一启动就拉起服务。
-        if (!prefs.getBoolean("diag_v3", false)) {
-            prefs.edit().putBoolean("enabled", false).putBoolean("diag_v3", true).apply();
-        }
         setContentView(buildUi());
         storeListener = new ClipStore.Listener() {
             @Override
@@ -807,15 +803,15 @@ public class MainActivity extends Activity {
 
     private void updateStatus(int total) {
         if (statusPill == null) return;
-        boolean enabled = prefs.getBoolean("enabled", false);
-        statusPill.render(enabled);
-        updateSetup(total, enabled);
+        boolean active = CaptureService.isRunning();
+        statusPill.render(active);
+        updateSetup(total, active);
     }
 
-    private void updateSetup(int total, boolean enabled) {
+    private void updateSetup(int total, boolean active) {
         if (setupCard == null) return;
         boolean overlay = Settings.canDrawOverlays(this);
-        boolean show = (!overlay || !enabled) && total > 0;
+        boolean show = (!overlay || !active) && total > 0;
         int previous = setupCard.getVisibility();
         setupCard.setVisibility(show ? View.VISIBLE : View.GONE);
         if (previous != setupCard.getVisibility() && list != null) list.requestLayout();
@@ -953,8 +949,8 @@ public class MainActivity extends Activity {
             emptySub.setText("复制或剪切一段文字，开启后台记录后，它会自动出现在这里。");
             emptyAction.setText("读取当前剪贴板");
             boolean overlay = Settings.canDrawOverlays(this);
-            boolean enabled = prefs.getBoolean("enabled", false);
-            emptyAction2.setVisibility(overlay && enabled ? View.GONE : View.VISIBLE);
+            boolean active = CaptureService.isRunning();
+            emptyAction2.setVisibility(overlay && active ? View.GONE : View.VISIBLE);
             emptyAction2.setText(overlay ? "开启后台记录" : "先允许悬浮窗");
         } else {
             emptyMode = 1;
@@ -981,12 +977,12 @@ public class MainActivity extends Activity {
     // ------------------------------------------------------------------ 交互
 
     void toggleCapture() {
-        boolean enabled = prefs.getBoolean("enabled", false);
-        if (enabled) {
+        boolean active = CaptureService.isRunning();
+        if (active) {
             prefs.edit().putBoolean("enabled", false).apply();
             stopService(new Intent(this, CaptureService.class));
             Ui.toast(this, "已暂停记录");
-            refreshAll();
+            safeRefresh();
             return;
         }
         if (!Settings.canDrawOverlays(this)) {
@@ -1003,7 +999,13 @@ public class MainActivity extends Activity {
         prefs.edit().putBoolean("enabled", true).apply();
         startCaptureService();
         Ui.toast(this, "开始记录，去复制一段试试");
-        refreshAll();
+        safeRefresh();
+        ui.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                safeRefresh();
+            }
+        }, 900L);
     }
 
     private void startCaptureService() {

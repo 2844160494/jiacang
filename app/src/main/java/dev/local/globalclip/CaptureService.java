@@ -177,7 +177,7 @@ public class CaptureService extends Service {
     }
 
     private boolean syncEnabled() {
-        return getSharedPreferences("settings", MODE_PRIVATE).getBoolean("sync", true);
+        return getSharedPreferences("settings", MODE_PRIVATE).getBoolean("sync", false);
     }
 
     private void quickPoll() {

@@ -524,7 +524,7 @@ final class Sheets {
         LinearLayout syncGroup = group(host);
         final TextView syncSub = Ui.text(host, "", 10.5f, Ui.MUTED, Typeface.DEFAULT);
         final Ui.Toggle syncToggle = new Ui.Toggle(host);
-        boolean sync = prefs.getBoolean("sync", true);
+        boolean sync = prefs.getBoolean("sync", false);
         syncToggle.setChecked(sync, false);
         syncSub.setText(sync ? "新内容会同步到 127.0.0.1:3080" : "已关闭，不建立任何连接");
         syncToggle.setOnCheckedListener(new Ui.Toggle.OnCheckedListener() {

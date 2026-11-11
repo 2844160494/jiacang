@@ -1,9 +1,8 @@
 package dev.local.globalclip;
 
 import android.app.Application;
-import android.os.Build;
 
-/** 诊断版：安装全局崩溃记录，把堆栈写到系统下载目录。 */
+/** 崩溃时把堆栈写到系统下载目录，方便排查。 */
 public class JiacangApp extends Application {
     @Override
     public void onCreate() {
@@ -20,11 +19,5 @@ public class JiacangApp extends Application {
                 if (previous != null) previous.uncaughtException(thread, error);
             }
         });
-        try {
-            CrashReport.write(this, "jiacang-boot.txt",
-                    "boot\n" + CrashReport.describe(null)
-                            + "\napp started, versionCode=" + 3 + ", SDK=" + Build.VERSION.SDK_INT);
-        } catch (Throwable ignored) {
-        }
     }
 }
